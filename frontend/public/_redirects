@@ -1,0 +1,5 @@
+# Netlify SPA + API proxy
+
+/api/* https://YOUR_RENDER_BACKEND/api/:splat 200
+/* /index.html 200
+
