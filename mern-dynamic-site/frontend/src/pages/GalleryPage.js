@@ -3,10 +3,24 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { API } from '../context/AuthContext';
 import { useAuth } from '../context/AuthContext';
-import { FiHeart, FiEye, FiFilter } from 'react-icons/fi';
+import { FiHeart, FiEye, FiFilter, FiImage } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-const CATEGORIES = ['all', 'nature', 'architecture', 'people', 'events', 'products', 'other'];
+const CATEGORIES = ['all', 'Team', 'Laptops', 'Smartphones', 'Tablets & ipads', 'Printers', 'Storage & Networking', 'Camera & smart devices', 'Audio', 'other'];
+
+const API_BASE = process.env.REACT_APP_API_URL;
+const resolveImageUrl = (url) => {
+  if (!url) return url;
+
+  // Backend stores local paths like: /uploads/gallery/<file>
+  if (url.startsWith('/')) {
+    // If API_BASE is provided, respect it; otherwise use same-origin so /uploads works behind the proxy.
+    return API_BASE ? `${API_BASE}${url}` : url;
+  }
+
+  return url;
+};
+
 
 export default function GalleryPage() {
   const { user } = useAuth();
@@ -50,7 +64,7 @@ export default function GalleryPage() {
         <div style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1))', borderBottom: '1px solid #334155', padding: '48px 0' }}>
           <div className="container" style={{ textAlign: 'center' }}>
             <h1 className="section-title">Gallery</h1>
-            <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>Explore our curated collection of images</p>
+            <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>Explore our site</p>
           </div>
         </div>
 
@@ -86,9 +100,12 @@ export default function GalleryPage() {
                     onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.4)'; }}
                     onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
                     <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden' }} onClick={() => setSelected(item)}>
-                      <img src={item.thumbnailUrl || item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
-                        onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
-                        onMouseLeave={e => e.target.style.transform = 'scale(1)'} />
+<img
+                        src={resolveImageUrl(item.thumbnailUrl || item.imageUrl)}
+                        alt={item.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
+                        onMouseEnter={e => (e.target.style.transform = 'scale(1.05)')}
+                        onMouseLeave={e => (e.target.style.transform = 'scale(1)')} />
                       <div style={{ position: 'absolute', top: 10, right: 10 }}>
                         <span style={{ background: 'rgba(0,0,0,0.6)', padding: '3px 10px', borderRadius: 10, fontSize: 11, color: '#94a3b8', textTransform: 'capitalize' }}>{item.category}</span>
                       </div>
@@ -145,7 +162,11 @@ export default function GalleryPage() {
           display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: 24,
         }}>
           <div onClick={e => e.stopPropagation()} style={{ maxWidth: 900, width: '100%' }}>
-            <img src={selected.imageUrl} alt={selected.title} style={{ width: '100%', borderRadius: 12, maxHeight: '70vh', objectFit: 'contain' }} />
+<img
+              src={resolveImageUrl(selected.imageUrl)}
+              alt={selected.title}
+              style={{ width: '100%', borderRadius: 12, maxHeight: '70vh', objectFit: 'contain' }}
+            />
             <div style={{ padding: '20px 0', textAlign: 'center' }}>
               <h2 style={{ fontWeight: 700, marginBottom: 8 }}>{selected.title}</h2>
               {selected.description && <p style={{ color: '#94a3b8' }}>{selected.description}</p>}

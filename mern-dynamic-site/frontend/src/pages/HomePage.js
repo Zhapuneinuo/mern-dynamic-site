@@ -4,7 +4,21 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { useSettings } from '../context/SettingsContext';
 import { API } from '../context/AuthContext';
-import { FiArrowRight, FiStar, FiUsers, FiImage, FiMessageSquare, FiZap, FiShield, FiGlobe } from 'react-icons/fi';
+import { FiArrowRight, FiStar, FiUsers, FiImage, FiMessageSquare, FiZap, FiShield, FiGlobe, FiSmartphone, FiCamera, FiTablet, FiPrinter, FiHeadphones, FiVideo, FiBluetooth, FiHardDrive, FiTv, FiMousePointer, FiSpeaker, FiBriefcase, FiShoppingBag } from 'react-icons/fi';
+
+const API_BASE = process.env.REACT_APP_API_URL;
+const resolveImageUrl = (url) => {
+  if (!url) return url;
+
+  // Backend stores local paths like: /uploads/gallery/<file>
+  if (url.startsWith('/')) {
+    // If API_BASE is provided, respect it; otherwise use same-origin so /uploads works behind the proxy.
+    return API_BASE ? `${API_BASE}${url}` : url;
+  }
+
+  return url;
+};
+
 
 export default function HomePage() {
   const { settings } = useSettings();
@@ -18,12 +32,13 @@ export default function HomePage() {
   }, []);
 
   const features = [
-    { icon: <FiZap size={24} />, title: 'Lightning Fast', desc: 'Built with modern React and Node.js for optimal performance.' },
-    { icon: <FiShield size={24} />, title: 'Secure Auth', desc: 'JWT-based authentication with role-based access control.' },
-    { icon: <FiGlobe size={24} />, title: 'Fully Responsive', desc: 'Beautiful on every device from mobile to desktop.' },
-    { icon: <FiUsers size={24} />, title: 'User Management', desc: 'Complete admin panel to manage users, content and more.' },
-    { icon: <FiImage size={24} />, title: 'Dynamic Gallery', desc: 'Upload, categorize, and display images with likes & views.' },
-    { icon: <FiMessageSquare size={24} />, title: 'Feedback System', desc: 'Collect and manage user feedback and testimonials.' },
+    { icon: <FiCamera size={24} />, title: 'Camera & Smart devices', desc: 'Cameras, CCTV, Drones, Smart home devices' },
+    { icon: <FiTablet size={30} />, title: 'Tablets & Smartphone', desc: 'Smartphones, Andriod Phones, iphones, Tablets, ipads, Smartwatches' },
+    { icon: <FiPrinter size={24} />, title: 'Printers', desc: 'Printers, Inkjet Printers, Laser Printers, Scanner, Ink & Toner, Projector.' },
+    { icon: <FiHeadphones size={24} />, title: 'Audio', desc: 'Earbuds, Headphones, Speakers, Bluetooth Speakers, Soundbars, Microphones' },
+    { icon: <FiHardDrive size={24} />, title: 'Storage & Networking', desc: 'SSDs, Hard Drives, USB Drives, Memory cards, Router, Wi-Fi Extenders, NAS Storage' },
+    { icon: <FiTv size={24} />, title: 'TV & Entertainment', desc: 'Smart TVs, Streaming Devices, Home Theater, TV Accessories' },
+    { icon: <FiShoppingBag size={24} />, title: 'Accessories', desc: 'Keyboard, Mouse, USB Hubs, Charger, Cables, Adapter, Gaming Consoles' },
   ];
 
   return (
@@ -39,18 +54,18 @@ export default function HomePage() {
             borderRadius: 20, fontSize: 13, color: '#a5b4fc', marginBottom: 28,
           }}>
             <FiZap size={13} />
-            <span>Full-Stack MERN Application</span>
+            <span>Smart Techies Service Official Page</span>
           </div>
 
           <h1 style={{
             fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 900,
             lineHeight: 1.1, marginBottom: 24,
           }}>
-            <span className="gradient-text">{settings.heroTitle || 'Welcome to Our Platform'}</span>
+            <span className="gradient-text">{settings.heroTitle || 'Welcome to Our Website'}</span>
           </h1>
 
           <p style={{ fontSize: '1.2rem', color: '#94a3b8', maxWidth: 600, margin: '0 auto 40px', lineHeight: 1.7 }}>
-            {settings.heroSubtitle || 'A fully dynamic website with admin panel, user dashboard, gallery, feedback system, and much more.'}
+            {settings.heroSubtitle || 'Official website of smart techies service, providing top-notch IT solution and services to clients worldwide. Explore our offering and discover how we can help your business thrive in the digital age.'}
           </p>
 
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -65,9 +80,9 @@ export default function HomePage() {
           {/* Stats row */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: 48, marginTop: 64, flexWrap: 'wrap' }}>
             {[
-              ['500+', 'Happy Users'],
-              ['200+', 'Gallery Items'],
-              ['99%', 'Uptime'],
+              ['10+', 'Happy Users'],
+              ['30+', 'Gallery Items'],
+              ['89%', 'Uptime'],
               ['24/7', 'Support'],
             ].map(([num, label]) => (
               <div key={label} style={{ textAlign: 'center' }}>
@@ -75,7 +90,7 @@ export default function HomePage() {
                 <div style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>{label}</div>
               </div>
             ))}
-          </div>
+          </div> 
         </div>
       </section>
 
@@ -85,7 +100,7 @@ export default function HomePage() {
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <h2 className="section-title">Everything You Need</h2>
             <p className="section-subtitle" style={{ margin: '0 auto' }}>
-              A complete MERN stack solution with all the features of a modern web application.
+              Official website of smart techies service, providing top-notch IT solution and services to clients worldwide.
             </p>
           </div>
           <div className="grid grid-3">
@@ -112,7 +127,7 @@ export default function HomePage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
               <div>
                 <h2 className="section-title" style={{ marginBottom: 8 }}>Our Gallery</h2>
-                <p style={{ color: '#64748b' }}>A glimpse of our amazing collection</p>
+                <p style={{ color: '#64748b' }}>A glimpse of our collection</p>
               </div>
               <Link to="/gallery" className="btn btn-outline">View All <FiArrowRight /></Link>
             </div>
@@ -124,7 +139,7 @@ export default function HomePage() {
                 }}
                 onMouseEnter={e => { e.currentTarget.querySelector('.overlay').style.opacity = 1; }}
                 onMouseLeave={e => { e.currentTarget.querySelector('.overlay').style.opacity = 0; }}>
-                  <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }} />
+<img src={resolveImageUrl(item.imageUrl)} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }} />
                   <div className="overlay" style={{
                     position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)',
                     display: 'flex', alignItems: 'flex-end', padding: 16,
@@ -169,7 +184,7 @@ export default function HomePage() {
         <div className="container" style={{ textAlign: 'center' }}>
           <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: 16 }}>Ready to Get Started?</h2>
           <p style={{ color: '#94a3b8', marginBottom: 32, fontSize: '1.1rem' }}>
-            Join thousands of users enjoying our platform today.
+            Join us and enjoy our service today.
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/register" className="btn btn-primary btn-lg">Create Account</Link>

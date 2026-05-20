@@ -3,7 +3,30 @@ import { API } from '../../context/AuthContext';
 import { FiPlus, FiEdit2, FiTrash2, FiEye, FiHeart, FiRefreshCw } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-const CATEGORIES = ['nature', 'architecture', 'people', 'events', 'products', 'other'];
+const CATEGORIES = [
+  'Laptops',
+  'Smartphones',
+  'Tablets & ipads',
+  'Printers',
+  'Camera & Smart devices',
+  'Storage & Networking',
+  'Audio',
+  'other',
+];
+
+const API_BASE = process.env.REACT_APP_API_URL;
+const resolveImageUrl = (url) => {
+  if (!url) return url;
+
+  // Backend stores local paths like: /uploads/gallery/<file>
+  if (url.startsWith('/')) {
+    // If API_BASE is provided, respect it; otherwise use same-origin so /uploads works behind the proxy.
+    return API_BASE ? `${API_BASE}${url}` : url;
+  }
+
+  return url;
+};
+
 
 export default function AdminGallery() {
   const [items, setItems] = useState([]);
@@ -12,7 +35,8 @@ export default function AdminGallery() {
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState(null); // 'add' | 'edit' | null
   const [current, setCurrent] = useState(null);
-  const [form, setForm] = useState({ title: '', description: '', imageUrl: '', category: 'other', tags: '', order: 0, isActive: true });
+  const [form, setForm] = useState({ title: '', description: '', imageFile: null, category: 'other', tags: '', order: 0, isActive: true });
+
   const [confirmDel, setConfirmDel] = useState(null);
 
   const fetchItems = useCallback(async () => {
@@ -26,26 +50,59 @@ export default function AdminGallery() {
 
   useEffect(() => { fetchItems(); }, [fetchItems]);
 
-  const openAdd = () => { setForm({ title: '', description: '', imageUrl: '', category: 'other', tags: '', order: 0, isActive: true }); setModal('add'); };
-  const openEdit = (item) => {
-    setForm({ title: item.title, description: item.description || '', imageUrl: item.imageUrl, category: item.category, tags: item.tags?.join(', ') || '', order: item.order, isActive: item.isActive });
-    setCurrent(item); setModal('edit');
+  const openAdd = () => {
+    setForm({ title: '', description: '', imageFile: null, category: 'other', tags: '', order: 0, isActive: true });
+    setCurrent(null);
+    setModal('add');
   };
+
+  const openEdit = (item) => {
+    setForm({
+      title: item.title,
+      description: item.description || '',
+      imageFile: null,
+      category: item.category,
+      tags: item.tags?.join(', ') || '',
+      order: item.order,
+      isActive: item.isActive,
+    });
+    setCurrent(item);
+    setModal('edit');
+  };
+
 
   const handleSubmit = async () => {
     try {
+      const fd = new FormData();
+      fd.append('title', form.title);
+      fd.append('description', form.description || '');
+      fd.append('category', form.category);
+      fd.append('tags', form.tags || '');
+      fd.append('order', String(form.order || 0));
+      fd.append('isActive', String(form.isActive));
+      if (form.imageFile) fd.append('image', form.imageFile);
+
       if (modal === 'add') {
-        const { data } = await API.post('/gallery', form);
-        setItems(prev => [data.item, ...prev]); setTotal(t => t + 1);
+        const { data } = await API.post('/gallery', fd, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        setItems(prev => [data.item, ...prev]);
+        setTotal(t => t + 1);
         toast.success('Added!');
       } else {
-        const { data } = await API.put(`/gallery/${current._id}`, form);
+        const { data } = await API.put(`/gallery/${current._id}`, fd, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
         setItems(prev => prev.map(i => i._id === current._id ? data.item : i));
         toast.success('Updated!');
       }
+
       setModal(null);
-    } catch (e) { toast.error(e.response?.data?.message || 'Error'); }
+    } catch (e) {
+      toast.error(e.response?.data?.message || 'Error');
+    }
   };
+
 
   const handleDelete = async (id) => {
     try {
@@ -75,7 +132,11 @@ export default function AdminGallery() {
           {items.map(item => (
             <div key={item._id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
               <div style={{ position: 'relative', aspectRatio: '16/9', background: '#0f172a' }}>
-                <img src={item.thumbnailUrl || item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+<img
+                  src={resolveImageUrl(item.thumbnailUrl || item.imageUrl)}
+                  alt={item.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
                 {!item.isActive && (
                   <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ color: '#ef4444', fontWeight: 700, fontSize: 12 }}>HIDDEN</span>
@@ -146,7 +207,6 @@ function GalleryModal({ title, form, setForm, onSubmit, onClose }) {
         </div>
         {[
           { label: 'Title *', key: 'title', type: 'text', placeholder: 'Image title' },
-          { label: 'Image URL *', key: 'imageUrl', type: 'url', placeholder: 'https://...' },
           { label: 'Description', key: 'description', type: 'textarea', placeholder: 'Optional description' },
           { label: 'Tags', key: 'tags', type: 'text', placeholder: 'nature, forest, green' },
           { label: 'Order', key: 'order', type: 'number', placeholder: '0' },
@@ -160,6 +220,17 @@ function GalleryModal({ title, form, setForm, onSubmit, onClose }) {
             )}
           </div>
         ))}
+
+        <div className="form-group">
+          <label className="form-label">Image File {title && '*'}</label>
+          <input
+            className="form-control"
+            type="file"
+            accept="image/*"
+            onChange={e => setForm({ ...form, imageFile: e.target.files?.[0] || null })}
+          />
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div className="form-group">
             <label className="form-label">Category</label>
@@ -175,11 +246,17 @@ function GalleryModal({ title, form, setForm, onSubmit, onClose }) {
             </select>
           </div>
         </div>
-        {form.imageUrl && (
+        {form.imageFile && (
           <div style={{ marginBottom: 16 }}>
-            <img src={form.imageUrl} alt="Preview" style={{ width: '100%', borderRadius: 8, maxHeight: 180, objectFit: 'cover' }} onError={e => e.target.style.display = 'none'} />
+            <img
+              src={URL.createObjectURL(form.imageFile)}
+              alt="Preview"
+              style={{ width: '100%', borderRadius: 8, maxHeight: 180, objectFit: 'cover' }}
+              onError={e => (e.target.style.display = 'none')}
+            />
           </div>
         )}
+
         <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
           <button className="btn btn-outline" onClick={onClose}>Cancel</button>
           <button className="btn btn-primary" onClick={onSubmit}>Save</button>
