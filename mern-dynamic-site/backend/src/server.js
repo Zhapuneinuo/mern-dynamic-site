@@ -48,14 +48,6 @@ app.use('/api/settings', require('./routes/settingsRoutes'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', env: process.env.NODE_ENV }));
 
-// Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../frontend/build', 'index.html'));
-  });
-}
-
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
