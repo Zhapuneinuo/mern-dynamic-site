@@ -4,7 +4,7 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { useSettings } from '../context/SettingsContext';
 import { API } from '../context/AuthContext';
-import { FiArrowRight, FiStar, FiUsers, FiImage, FiMessageSquare, FiZap, FiShield, FiGlobe, FiSmartphone, FiCamera, FiTablet, FiPrinter, FiHeadphones, FiVideo, FiBluetooth, FiHardDrive, FiTv, FiMousePointer, FiSpeaker, FiBriefcase, FiShoppingBag } from 'react-icons/fi';
+import { FiHeart } from 'react-icons/fi';
 
 const API_BASE = process.env.REACT_APP_API_URL;
 const resolveImageUrl = (url) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { API } from '../../context/AuthContext';
-import { FiSearch, FiEdit2, FiTrash2, FiUserPlus, FiRefreshCw } from 'react-icons/fi';
+import { FiUser, FiEdit, FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { formatDistanceToNow } from 'date-fns';
 

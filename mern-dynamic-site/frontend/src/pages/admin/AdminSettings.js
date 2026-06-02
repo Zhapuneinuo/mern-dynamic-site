@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../../context/AuthContext';
 import { useSettings } from '../../context/SettingsContext';
-import { FiSave, FiRefreshCw } from 'react-icons/fi';
+import { FiSave } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 export default function AdminSettings() {
@@ -17,11 +17,21 @@ export default function AdminSettings() {
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState('general');
 
+  // Fixed: removed direct dependency on `form` by using functional update
   useEffect(() => {
-    API.get('/settings').then(({ data }) => {
-      if (data.settings) setForm({ ...form, ...data.settings, socialLinks: { ...form.socialLinks, ...(data.settings.socialLinks || {}) } });
-    }).catch(() => {}).finally(() => setLoading(false));
-  }, []);
+    API.get('/settings')
+      .then(({ data }) => {
+        if (data.settings) {
+          setForm(prev => ({
+            ...prev,
+            ...data.settings,
+            socialLinks: { ...prev.socialLinks, ...(data.settings.socialLinks || {}) }
+          }));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []); // Empty dependency array is now safe
 
   const handleSave = async () => {
     setSaving(true);
@@ -29,8 +39,11 @@ export default function AdminSettings() {
       const { data } = await API.put('/settings', form);
       setSettings(data.settings);
       toast.success('Settings saved!');
-    } catch (e) { toast.error(e.response?.data?.message || 'Failed'); }
-    finally { setSaving(false); }
+    } catch (e) {
+      toast.error(e.response?.data?.message || 'Failed');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));

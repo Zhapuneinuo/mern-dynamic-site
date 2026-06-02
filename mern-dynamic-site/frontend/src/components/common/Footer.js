@@ -45,7 +45,7 @@ export default function Footer() {
             <p style={{ color: '#64748b', fontSize: 14, marginBottom: 16 }}>{settings.contactPhone || '+1 (555) 000-0000'}</p>
             <div style={{ display: 'flex', gap: 12 }}>
               {[FiGithub, FiTwitter, FiInstagram, FiLinkedin, FiYoutube].map((Icon, i) => (
-                <a key={i} href="#" style={{
+                <a key={i} href="/" style={{
                   width: 36, height: 36, borderRadius: 8, background: '#1e293b',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: '#64748b', transition: 'all 0.2s',
