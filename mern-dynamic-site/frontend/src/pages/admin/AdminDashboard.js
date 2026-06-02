@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { API } from '../../context/AuthContext';
-import { FiUsers, FiImage, FiMessageSquare, FiMail, FiTrendingUp, FiAlertCircle } from 'react-icons/fi';
+import { FiUsers, FiImage, FiMessageSquare, FiMail, FiAlertCircle } from 'react-icons/fi';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function AdminDashboard() {
