@@ -4,7 +4,7 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { useSettings } from '../context/SettingsContext';
 import { API } from '../context/AuthContext';
-import { FiHeart } from 'react-icons/fi';
+import { FiCamera, FiTablet, FiPrinter, FiHeadphones, FiHardDrive, FiTv, FiShoppingBag, FiZap, FiArrowRight } from 'react-icons/fi';
 
 const API_BASE = process.env.REACT_APP_API_URL;
 const resolveImageUrl = (url) => {
@@ -24,8 +24,6 @@ export default function HomePage() {
   const { settings } = useSettings();
   const [testimonials, setTestimonials] = useState([]);
   const [galleryPreview, setGalleryPreview] = useState([]);
-  const [stats, setStats] = useState({ users: 0, gallery: 0, feedback: 0 });
-
   useEffect(() => {
     API.get('/feedback/public').then(({ data }) => setTestimonials(data.testimonials || [])).catch(() => {});
     API.get('/gallery?limit=6').then(({ data }) => setGalleryPreview(data.items || [])).catch(() => {});
