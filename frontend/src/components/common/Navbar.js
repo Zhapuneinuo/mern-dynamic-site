@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useSettings } from '../../context/SettingsContext';
-import { FiMenu, FiX, FiUser, FiLogOut, FiSettings, FiGrid, FiShield } from 'react-icons/fi';
-
+import { FiMenu, FiX, FiUser, FiLogOut, FiShield, FiGrid } from 'react-icons/fi';
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
@@ -47,7 +46,7 @@ export default function Navbar() {
             borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontWeight: 800, fontSize: 16, color: 'white',
           }}>M</div>
-          <span style={{ fontWeight: 800, fontSize: 18 }}>{settings.siteName || 'DynaSite'}</span>
+          <span style={{ fontWeight: 800, fontSize: 18 }}>{settings.siteName || 'STS Kohima'}</span>
         </Link>
 
         {/* Desktop Nav */}
