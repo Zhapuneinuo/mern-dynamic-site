@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiGithub, FiTwitter, FiInstagram, FiLinkedin } from 'react-icons/fi';
+import { FiGithub, FiTwitter, FiInstagram, FiLinkedin, FiYoutube } from 'react-icons/fi';
 import { useSettings } from '../../context/SettingsContext';
 
 export default function Footer() {
@@ -17,10 +17,10 @@ export default function Footer() {
                 borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontWeight: 800, fontSize: 16, color: 'white',
               }}>M</div>
-              <span style={{ fontWeight: 800, fontSize: 18 }}>{settings.siteName || 'DynaSite'}</span>
+              <span style={{ fontWeight: 800, fontSize: 18 }}>{settings.siteName || 'STS Kohima'}</span>
             </div>
             <p style={{ color: '#64748b', fontSize: 14, lineHeight: 1.7 }}>
-              {settings.siteDescription || 'A full-featured MERN stack platform with admin and user management.'}
+              {settings.siteDescription || 'Smart Techies Service Kohima Official Website.'}
             </p>
           </div>
           <div>
@@ -44,7 +44,7 @@ export default function Footer() {
             <p style={{ color: '#64748b', fontSize: 14, marginBottom: 8 }}>{settings.contactEmail || 'hello@dynasite.com'}</p>
             <p style={{ color: '#64748b', fontSize: 14, marginBottom: 16 }}>{settings.contactPhone || '+1 (555) 000-0000'}</p>
             <div style={{ display: 'flex', gap: 12 }}>
-              {[FiGithub, FiTwitter, FiInstagram, FiLinkedin].map((Icon, i) => (
+              {[FiGithub, FiTwitter, FiInstagram, FiLinkedin, FiYoutube].map((Icon, i) => (
                 <a key={i} href="#" style={{
                   width: 36, height: 36, borderRadius: 8, background: '#1e293b',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -60,7 +60,7 @@ export default function Footer() {
         </div>
         <div style={{ borderTop: '1px solid #1e293b', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
           <p style={{ color: '#475569', fontSize: 13 }}>© {new Date().getFullYear()} {settings.siteName || 'DynaSite'}. All rights reserved.</p>
-          <p style={{ color: '#475569', fontSize: 13 }}>Built with ❤️ using MERN Stack</p>
+          <p style={{ color: '#475569', fontSize: 13 }}>Visit STS Kohima Again📌</p>
         </div>
       </div>
     </footer>

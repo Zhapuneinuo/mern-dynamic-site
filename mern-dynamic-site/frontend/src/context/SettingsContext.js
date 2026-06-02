@@ -5,9 +5,9 @@ const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState({
-    siteName: 'Dynamic MERN Site',
-    heroTitle: 'Welcome to Our Platform',
-    heroSubtitle: 'Discover amazing content and connect with us',
+    siteName: 'Smart Techies Service Kohima',
+    heroTitle: 'Welcome to Our Official Website',
+    heroSubtitle: 'Discover and connect with us',
     primaryColor: '#6366f1',
   });
 

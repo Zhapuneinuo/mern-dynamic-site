@@ -45,9 +45,9 @@ export default function ContactPage() {
                 Fill out the form and we'll get back to you within 24 hours.
               </p>
               {[
-                { icon: <FiMail />, label: 'Email', value: settings.contactEmail || 'hello@dynasite.com' },
-                { icon: <FiPhone />, label: 'Phone', value: settings.contactPhone || '+1 (555) 000-0000' },
-                { icon: <FiMapPin />, label: 'Address', value: settings.contactAddress || '123 Main St, City, Country' },
+                { icon: <FiMail />, label: 'Email', value: settings.contactEmail || 'stskohima@gmail.com' },
+                { icon: <FiPhone />, label: 'Phone', value: settings.contactPhone || '91+ 9876543210' },
+                { icon: <FiMapPin />, label: 'Address', value: settings.contactAddress || 'Kohima 797001, Nagaland' },
               ].map(({ icon, label, value }) => (
                 <div key={label} style={{ display: 'flex', gap: 16, marginBottom: 24, alignItems: 'flex-start' }}>
                   <div style={{

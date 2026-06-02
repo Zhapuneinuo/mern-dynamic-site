@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const siteSettingsSchema = new mongoose.Schema(
   {
-    siteName: { type: String, default: 'My Dynamic Site' },
+    siteName: { type: String, default: 'STS Kohima' },
     siteDescription: { type: String, default: 'Welcome to our website' },
     logo: { type: String, default: '' },
     heroTitle: { type: String, default: 'Welcome to Our Platform' },

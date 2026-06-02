@@ -47,7 +47,7 @@ export default function Navbar() {
             borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontWeight: 800, fontSize: 16, color: 'white',
           }}>M</div>
-          <span style={{ fontWeight: 800, fontSize: 18 }}>{settings.siteName || 'DynaSite'}</span>
+          <span style={{ fontWeight: 800, fontSize: 18 }}>{settings.siteName || 'STS Kohima'}</span>
         </Link>
 
         {/* Desktop Nav */}

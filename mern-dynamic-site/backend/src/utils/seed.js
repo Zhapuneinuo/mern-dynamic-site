@@ -31,23 +31,23 @@ const seed = async () => {
   await User.create({
     name: 'Demo User',
     email: 'user@demo.com',
-    password: 'user1234',
+    password: 'user123',
     role: 'user',
     bio: 'Regular user account',
   });
-  console.log('✅ User created: user@demo.com / user1234');
+  console.log('✅ User created: user@demo.com / user123');
 
   // Site settings
   await SiteSettings.create({
-    siteName: 'DynaSite',
-    siteDescription: 'A full-featured MERN stack dynamic website.',
-    heroTitle: 'Build Something Amazing',
-    heroSubtitle: 'A production-ready MERN stack with admin panel, gallery, feedback, and more.',
+    siteName: 'STS Kohima',
+    siteDescription: 'Welcome to our website.',
+    heroTitle: 'Discover and contact us',
+    heroSubtitle: 'Smart Techies Service Kohima Nagaland.',
     aboutTitle: 'About Us',
-    aboutContent: 'We are a team passionate about building great web experiences.',
-    contactEmail: 'hello@dynasite.com',
-    contactPhone: '+1 (555) 000-0000',
-    contactAddress: '123 Main St, San Francisco, CA',
+    aboutContent: 'We provide you dream tech.',
+    contactEmail: 'stskohima@gmail.com',
+    contactPhone: '91+ 9876543210',
+    contactAddress: 'Kohima 797001, Nagaland',
     primaryColor: '#6366f1',
   });
   console.log('✅ Site settings seeded');
@@ -60,6 +60,7 @@ const seed = async () => {
     { title: 'Modern Architecture', category: 'architecture', imageUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800', description: 'Contemporary building design' },
     { title: 'Forest Path', category: 'nature', imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800', description: 'Serene forest walkway' },
     { title: 'Portrait Study', category: 'people', imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800', description: 'Creative portrait photography' },
+    { title: 'Laptop', category: 'Laptops', imageUrl: "C:\Users\zziep\OneDrive\Desktop\images1.jpg", description: 'HP Laptop' },
   ];
 
   for (const item of galleryItems) {

@@ -38,10 +38,10 @@ export default function RegisterPage() {
               borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontWeight: 900, fontSize: 20, color: 'white',
             }}>M</div>
-            <span style={{ fontWeight: 800, fontSize: 20 }}>DynaSite</span>
+            <span style={{ fontWeight: 800, fontSize: 20 }}>STS Kohima</span>
           </Link>
           <h1 style={{ fontWeight: 800, fontSize: '1.8rem', marginBottom: 8 }}>Create account</h1>
-          <p style={{ color: '#64748b' }}>Join us today — it's free!</p>
+          <p style={{ color: '#64748b' }}>Join us today!</p>
         </div>
 
         <div className="card glow">

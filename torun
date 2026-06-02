@@ -1,0 +1,10 @@
+cd mern-dynamic-site\backend
+node src\utils\seed.js
+npm run dev
+
+
+cd mern-dynamic-site\frontend
+npm start
+
+
+mongodb://localhost:27017/mern-dynamic-site      

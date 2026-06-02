@@ -7,6 +7,9 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 const connectDB = require('./config/db');
 
+// 🔍 DEBUG: Print the MONGO_URI to verify it's loaded correctly
+console.log('🔍 MONGO_URI value:', process.env.MONGO_URI);
+
 // Connect to MongoDB
 connectDB();
 

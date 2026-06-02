@@ -9,7 +9,7 @@ const gallerySchema = new mongoose.Schema(
     publicId: { type: String }, // Cloudinary public_id
     category: {
       type: String,
-      enum: ['nature', 'architecture', 'people', 'events', 'products', 'other'],
+      enum: ['all', 'Team', 'Laptops', 'Smartphones', 'Tablets & ipads', 'Printers', 'Storage & Networking', 'Camera & smart devices', 'Audio', 'other'],
       default: 'other',
     },
     tags: [{ type: String }],
