@@ -4,7 +4,7 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { useSettings } from '../context/SettingsContext';
 import { API } from '../context/AuthContext';
-import { FiHeart } from 'react-icons/fi';
+import { FiHeart, FiCamera, FiTablet, FiPrinter, FiHeadphones, FiHardDrive, FiTv, FiShoppingBag, FiZap, FiArrowRight } from 'react-icons/fi';
 
 const API_BASE = process.env.REACT_APP_API_URL;
 const resolveImageUrl = (url) => {
