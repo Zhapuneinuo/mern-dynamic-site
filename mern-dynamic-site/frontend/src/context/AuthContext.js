@@ -4,7 +4,15 @@ import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
-const API = axios.create({ baseURL: '/api' });
+// Supports both local dev and Netlify/production builds.
+// - Local: use REACT_APP_API_BASE_URL=http://localhost:5000
+// - Netlify: set REACT_APP_API_BASE_URL=https://<your-backend-host>
+// If not set, we fall back to relative '/api' (works only if you have a proxy to your backend).
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '/api';
+
+const API = axios.create({
+  baseURL: API_BASE_URL.startsWith('http') ? API_BASE_URL : API_BASE_URL,
+});
 
 // Attach token to every request
 API.interceptors.request.use((config) => {
@@ -72,3 +80,4 @@ export const useAuth = () => {
 
 export { API };
 export default AuthContext;
+
